@@ -1,8 +1,8 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import MaterialReactTable from "material-react-table";
 import type { MRT_ColumnDef } from "material-react-table";
 import mockData from "./MOCK_DATA.json";
-import moment from "moment";
+
 import "./App.css";
 
 interface MokDataType {
@@ -13,6 +13,10 @@ interface MokDataType {
   users: number;
 }
 
+const formatDate = (date: ReactNode): string => {
+  let tempDate = new Date(date as string);
+  return `${tempDate.getDate()}-${tempDate.getMonth()}-${tempDate.getFullYear()}`;
+};
 function App() {
   const columns = React.useMemo<MRT_ColumnDef<MokDataType>[]>(
     () => [
@@ -22,8 +26,8 @@ function App() {
       },
       {
         accessorKey: "date", //simple recommended way to define a column
-        Cell: ({ renderedCellValue }) =>
-          moment(renderedCellValue?.toString()).format("DD-MM-YYYY"),
+        Cell: ({ renderedCellValue }) => formatDate(renderedCellValue),
+
         header: "Date",
       },
       {
@@ -43,7 +47,6 @@ function App() {
         columns={columns}
         data={mockData}
         // enableColumnActions={false}
-
         enableTopToolbar={false}
       />
     </div>
