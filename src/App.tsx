@@ -15,7 +15,13 @@ interface MokDataType {
 
 const formatDate = (date: ReactNode): string => {
   let tempDate = new Date(date as string);
-  return `${tempDate.getDate()}-${tempDate.getMonth()}-${tempDate.getFullYear()}`;
+  let month = tempDate.toLocaleString("default", {
+    month: "long",
+  });
+  let day =
+    tempDate.getDate() < 10 ? `0${tempDate.getDate()}` : tempDate.getDate();
+  let year = tempDate.getFullYear();
+  return `${month} ${day}, ${year}`;
 };
 function App() {
   const columns = React.useMemo<MRT_ColumnDef<MokDataType>[]>(
